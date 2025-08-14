@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
 
-    // BroadcastReceiver ko class level pe define karo
     private val headphoneReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             if (intent?.action == Intent.ACTION_HEADSET_PLUG) {
@@ -27,14 +26,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // BroadcastReceiver ko register karo
         val filter = IntentFilter(Intent.ACTION_HEADSET_PLUG)
         registerReceiver(headphoneReceiver, filter)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        // Receiver ko unregister karo
+        
         unregisterReceiver(headphoneReceiver)
     }
 }
