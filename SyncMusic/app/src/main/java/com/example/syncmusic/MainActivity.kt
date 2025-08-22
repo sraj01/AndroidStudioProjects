@@ -97,6 +97,9 @@ class MainActivity : AppCompatActivity() {
             unbindService(connection)
             isBound = false
         }
+
+        val stopIntent = Intent(this, MusicService::class.java)
+        stopService(stopIntent)
         seekBarJob?.cancel()
     }
 }

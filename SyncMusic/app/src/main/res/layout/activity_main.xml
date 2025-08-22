@@ -116,7 +116,7 @@
             android:layout_height="55dp"
             android:background="@android:color/transparent"
             android:src="@drawable/ic_prev"
-            android:contentDescription="Previous" />
+            android:contentDescription="@string/previous" />
 
         <!-- Play/Pause Button -->
         <ImageButton
@@ -125,7 +125,7 @@
             android:layout_height="85dp"
             android:background="@android:color/transparent"
             android:src="@drawable/ic_play"
-            android:contentDescription="Play/Pause"
+            android:contentDescription="@string/play_pause"
             android:padding="8dp" />
 
         <!-- Next Button -->
@@ -135,7 +135,7 @@
             android:layout_height="55dp"
             android:background="@android:color/transparent"
             android:src="@drawable/ic_next"
-            android:contentDescription="Next" />
+            android:contentDescription="@string/next" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
