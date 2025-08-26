@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+        <!-- Android 12+ Splash Theme -->
+        <style name="Theme.Taskly.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+            <item name="android:windowSplashScreenBackground">@color/white</item>
+            <item name="android:windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+            <item name="android:windowSplashScreenAnimationDuration">0</item>
+            <item name="android:splashScreenTheme">@style/Theme.Taskly.NoActionBar</item>
+        </style>
+
+
+</resources>
