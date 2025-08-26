@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "534662789341",
+    "project_id": "tasklyy-420d0",
+    "storage_bucket": "tasklyy-420d0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:534662789341:android:0e41dbf94a50124f110334",
+        "android_client_info": {
+          "package_name": "com.example.tasklyy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "534662789341-b7uknvjpqdg9q1845lfqotl1h7f0o5po.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tasklyy",
+            "certificate_hash": "77ffe8573973342a53eaabc90461fd9be4c4c0ea"
+          }
+        },
+        {
+          "client_id": "534662789341-a0dr1bmtqfo9bpg97k9mq34u2rrru6ul.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBkErxd9B-1TBYVOGjwrFacKMvfUbjUz_o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "534662789341-a0dr1bmtqfo9bpg97k9mq34u2rrru6ul.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
