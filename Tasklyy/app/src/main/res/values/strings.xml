@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">Tasklyy</string>
-    <string name="web_id">534662789341-a0dr1bmtqfo9bpg97k9mq34u2rrru6ul.apps.googleusercontent.com</string>
+    <string name="web_id">534662789341-jpjcjb5sq2vgsqj450i4ocqa39sffd6o.apps.googleusercontent.com</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="continue_google">Continue with Google</string>
+    <string name="create_account">Create account</string>
+    <string name="signout">signout</string>
 </resources>

@@ -39,23 +39,39 @@ buildFeatures{
 }
 
 dependencies {
+    dependencies {
+        // ✅ Firebase BOM (handles all versions automatically)
+        implementation(platform("com.google.firebase:firebase-bom:33.4.0"))
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    implementation(libs.androidx.activity)
-    implementation(libs.androidx.constraintlayout)
-    implementation(libs.firebase.auth)
-    implementation(libs.androidx.credentials)
-    implementation(libs.androidx.credentials.play.services.auth)
-    implementation(libs.googleid)
-    implementation("com.airbnb.android:lottie:6.4.0")
-    implementation(libs.google.firebase.firestore.ktx)
+        // ✅ Firebase dependencies (NO versions needed)
+        implementation("com.google.firebase:firebase-auth-ktx")
+        implementation("com.google.firebase:firebase-firestore-ktx")
+        implementation("com.google.firebase:firebase-analytics-ktx")
 
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.4")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.4")
-    implementation(libs.firebase.firestore.ktx)
-    implementation(libs.firebase.firestore)
+        // AndroidX & Other Libraries
+        implementation(libs.androidx.core.ktx)
+        implementation(libs.androidx.appcompat)
+        implementation(libs.material)
+        implementation(libs.androidx.activity)
+        implementation(libs.androidx.constraintlayout)
+
+        // Google Sign-In / Credential Manager
+        implementation(libs.androidx.credentials)
+        implementation(libs.androidx.credentials.play.services.auth)
+        implementation(libs.googleid)
+        implementation(libs.googleid.vlatestversion)
+
+        // Lottie Animation
+        implementation("com.airbnb.android:lottie:6.4.0")
+
+        // Lifecycle Components
+        implementation(libs.androidx.lifecycle.viewmodel.ktx)
+        implementation(libs.androidx.lifecycle.livedata.ktx)
+
+        // Jetpack Compose (optional, if used)
+        implementation(libs.androidx.activity.compose)
+    }
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

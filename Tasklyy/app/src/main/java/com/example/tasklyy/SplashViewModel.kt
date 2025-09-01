@@ -18,7 +18,7 @@ class SplashViewModel : ViewModel() {
 
     private fun startSplashTimer() {
         viewModelScope.launch {
-            delay(3000) // Wait for 3 sec
+            delay(2000)
             _navigateToMain.value = true
         }
     }

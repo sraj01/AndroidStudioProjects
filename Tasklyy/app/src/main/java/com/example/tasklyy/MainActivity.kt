@@ -6,21 +6,24 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.credentials.GetCredentialRequest
+import com.example.tasklyy.databinding.ActivityMainBinding
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
+import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var mAuth: FirebaseAuth
-    private lateinit var
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val googleIdOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
-            .setFilterByAuthorizedAccounts(true)
-            .setServerClientId(WEB_CLIENT_ID)
-            .setAutoSelectEnabled(true)
-            // nonce string to use when generating a Google ID token
-            .setNonce(nonce)
-            .build()
+        val user = Firebase.auth.currentUser
+        binding.btnSignout.setOnClickListener {
+            GoogleSignInUtils.signOutUser(this)
+        }
+
     }
 }
