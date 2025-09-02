@@ -19,6 +19,8 @@ googleid = "1.1.1"
 firebaseFirestoreKtx = "26.0.0"
 firebaseFirestore = "26.0.0"
 activityCompose = "1.10.1"
+hilt ="2.51.1"
+
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -45,4 +47,3 @@ androidx-activity-compose = { group = "androidx.activity", name = "activity-comp
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
-

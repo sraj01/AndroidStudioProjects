@@ -1,24 +1,26 @@
 package com.example.tasklyy
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.example.tasklyy.GoogleSignInUtils
-import com.example.tasklyy.MainActivity
 import com.example.tasklyy.databinding.ActivityLoginBinding
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.cancel
+import com.example.tasklyy.viewmodel.LoginViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
-    private val scope = MainScope()
+    private val viewModel: LoginViewModel by viewModels()
 
-    private val launcher = registerForActivityResult(
+    private final val launcher : ActivityResultLauncher<Intent> = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {
-        doGoogleSignIn()
+        viewModel.signInWithGoogle(this,launcher)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,28 +29,19 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.btnGoogle.setOnClickListener {
-            doGoogleSignIn()
-        }
-    }
-
-    private fun doGoogleSignIn() {
-        GoogleSignInUtils.doGoogleSignIn(
-            context = this,
-            scope = scope,
-            launcher = launcher,
-            login = {
+        // Observe login state
+        viewModel.loginState.observe(this) { success ->
+            if (success) {
                 val intent = Intent(this, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
                 finish()
             }
-        )
-    }
+        }
 
-    override fun onDestroy() {
-        super.onDestroy()
-
-        scope.cancel()
+        // Google Sign-In Button
+        binding.btnGoogle.setOnClickListener {
+            viewModel.signInWithGoogle(this, launcher)
+        }
     }
 }

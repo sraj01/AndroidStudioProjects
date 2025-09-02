@@ -2,6 +2,9 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.google.gms.google.services)
+    id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
+
 }
 
 android {
@@ -17,9 +20,9 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-buildFeatures{
-    viewBinding =true
-}
+    buildFeatures{
+        viewBinding =true
+    }
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -70,6 +73,9 @@ dependencies {
 
         // Jetpack Compose (optional, if used)
         implementation(libs.androidx.activity.compose)
+        implementation("com.google.dagger:hilt-android:2.51.1")
+        ksp("com.google.dagger:hilt-android-compiler:2.56.2")
+
     }
 
     testImplementation(libs.junit)
