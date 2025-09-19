@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/button_board"
+    android:title="@string/board"
+    android:icon="@drawable/baseline_dashboard_24"/>
+
+    <item android:id="@+id/button_calendar"
+    android:title="@string/calendar"
+    android:icon="@drawable/outline_calendar_month_24"/>
+
+    <item android:title=""
+        android:enabled="false"/>
+
+    <item android:id="@+id/button_reports"
+    android:title="@string/report"
+    android:icon="@drawable/baseline_reports"/>
+
+    <item android:id="@+id/button_settings"
+    android:title="@string/settings"
+    android:icon="@drawable/baseline_settings_24"/>
+
+
+</menu>

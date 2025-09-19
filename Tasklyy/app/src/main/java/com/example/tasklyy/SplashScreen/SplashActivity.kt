@@ -1,9 +1,12 @@
-package com.example.tasklyy
+package com.example.tasklyy.SplashScreen
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.example.tasklyy.AuthenticationScreens.LoginScreen.LoginActivity
+import com.example.tasklyy.HomeScreen.MainActivity
+import com.example.tasklyy.R
 import com.example.tasklyy.databinding.ActivitySplashactivityBinding
 import com.google.firebase.auth.FirebaseAuth
 

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    app:cardCornerRadius="20dp"
+    android:layout_margin="20dp"
+    android:padding="20dp"
+    app:cardElevation="5dp"
+    app:cardUseCompatPadding="true">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="wrap_content"
+    android:layout_margin="20dp"
+    android:padding="20dp">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/task_title"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:text="@string/task_title"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/title_linear"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:padding="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/task_status"
+            android:text="@string/todo"
+            android:layout_marginEnd="5dp"
+            android:padding="5dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/task_priority"
+            android:text="@string/high"
+            android:layout_marginStart="5dp"
+            android:padding="5dp"
+
+            />
+
+    </LinearLayout>
+</LinearLayout>
+</androidx.cardview.widget.CardView>

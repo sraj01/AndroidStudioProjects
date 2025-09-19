@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".BaseApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -16,9 +17,8 @@
         android:theme="@style/Theme.Tasklyy"
         tools:targetApi="31">
 
-        <!-- Splash Screen (Launcher) -->
         <activity
-            android:name=".SplashActivity"
+            android:name=".SplashScreen.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,13 +28,18 @@
 
         <!-- Login Screen -->
         <activity
-            android:name=".LoginActivity"
+            android:name=".AuthenticationScreens.LoginScreen.LoginActivity"
+            android:exported="true"
+            />
+        <!-- SignUpScreen -->
+        <activity
+            android:name=".AuthenticationScreens.SignUpScreen.SignUpActivity"
             android:exported="true"
             />
 
         <!-- Main Screen -->
         <activity
-            android:name=".MainActivity"
+            android:name=".HomeScreen.MainActivity"
             android:exported="true" />
 
     </application>
