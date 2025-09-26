@@ -8,13 +8,11 @@ import androidx.room.PrimaryKey
 data class UserEntity(
 
     @PrimaryKey(autoGenerate = true)
-    var userId: Int = 0,
+    val userId: Int = 0,
 
 
     @ColumnInfo(name = "user_name")
     var userName: String = "",
-
-
 
     @ColumnInfo(name = "password")
     var passWord: String = "",

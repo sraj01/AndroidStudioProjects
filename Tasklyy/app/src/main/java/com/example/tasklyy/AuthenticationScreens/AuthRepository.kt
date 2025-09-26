@@ -19,60 +19,79 @@ class AuthRepository @Inject constructor(
         private val firebaseAuth: FirebaseAuth,
     */
     private val userDao: UserDao,
+
     private val sharedPrefs: SharedPrefsHelper
 ) {
 
+    fun signUpWithGoogle(
+        context: Context,
+        scope: CoroutineScope,
+        launcher: ActivityResultLauncher<Intent>,
+        onLoginSuccess: () -> Unit
+    ) {
+        GoogleSignInUtils.Companion.doGoogleSignUP(
+            context = context,
+            scope = scope,
+            launcher = launcher,
+            isLogin = false,
+            login = onLoginSuccess
+        )
+    }
     fun signInWithGoogle(
         context: Context,
         scope: CoroutineScope,
         launcher: ActivityResultLauncher<Intent>,
         onLoginSuccess: () -> Unit
     ) {
-        GoogleSignInUtils.Companion.doGoogleSignIn(
+        GoogleSignInUtils.Companion.doGoogleSignUP(
             context = context,
             scope = scope,
             launcher = launcher,
+            isLogin = true,
             login = onLoginSuccess
         )
     }
-
-    suspend fun signUp(
+    fun signUp(
         username: String = "",
         password: String = "",
         email: String = "",
+        scope: CoroutineScope,
         onResult: (Boolean, String) -> Unit
+
     ) {
         // TODO: get user by username or emailid (method change in dao)
+        scope.launch(Dispatchers.IO) {
+            Log.d("AuthRepository", "username:" + username)
+            Log.d("AuthRepository", "password:" + password)
+            Log.d("AuthRepository", "email:" + email)
 
-        Log.d("AuthRepository", "username:" + username)
-        Log.d("AuthRepository", "password:" + password)
-        Log.d("AuthRepository", "email:" + email)
-        val existingUser = userDao.getUserfromUsername(username)
-/*
-        val existingMailUser = userDao.getUserfromEmail(email)
-*/
-        if (existingUser != null) {
-            onResult(false, "User already exists")
-//                return@launch
-        }
+            val existingUser = userDao.getUserfromUsername(username)
 
-        userDao.insertUser(
-            UserEntity(
-                userName = username,
-                passWord = password,
-                emailId = email
+
+            if (existingUser != null) {
+                withContext(Dispatchers.Main) {
+                    onResult(false, "User already exists")
+
+                }
+                return@launch
+            }
+            userDao.insertUser(
+                UserEntity(
+                    userName = username,
+                    passWord = password,
+                    emailId = email
+                )
             )
-        )
-        onResult(true, "Signup successful")
-
+            withContext(Dispatchers.Main) {
+                onResult(true, "Signup successful")
+            }
+        }
     }
 
     fun login(
         username: String = "",
         password: String = "",
-        /*
-                email: String ="",
-        */
+
         scope: CoroutineScope,
         onResult: (Boolean, String) -> Unit
     ) {
@@ -96,7 +115,7 @@ class AuthRepository @Inject constructor(
             }
         }
     }
-
     fun getLoggedInUser(): String? = sharedPrefs.getLoggedInUser()
     fun logout() = sharedPrefs.clearUser()
 }
+

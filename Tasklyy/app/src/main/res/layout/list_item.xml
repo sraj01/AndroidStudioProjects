@@ -6,7 +6,8 @@
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
     app:cardCornerRadius="20dp"
-    android:layout_margin="20dp"
+    android:layout_marginStart="20dp"
+    android:layout_marginEnd="20dp"
     android:padding="20dp"
     app:cardElevation="5dp"
     app:cardUseCompatPadding="true">
@@ -15,7 +16,7 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="wrap_content"
-    android:layout_margin="20dp"
+    android:layout_margin="0dp"
     android:padding="20dp">
 
 
@@ -33,7 +34,7 @@
         android:id="@+id/title_linear"
         android:orientation="horizontal"
         android:layout_marginTop="5dp"
-        android:padding="5dp">
+        android:padding="0dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -41,7 +42,9 @@
             android:id="@+id/task_status"
             android:text="@string/todo"
             android:layout_marginEnd="5dp"
-            android:padding="5dp"
+            android:paddingBottom="5dp"
+            android:paddingEnd="5dp"
+            android:paddingRight="5dp"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -50,6 +53,12 @@
             android:text="@string/high"
             android:layout_marginStart="5dp"
             android:padding="5dp"
+            android:paddingEnd="5dp"
+            android:paddingRight="5dp"
+            android:paddingBottom="5dp"
+
+
+
 
             />
 

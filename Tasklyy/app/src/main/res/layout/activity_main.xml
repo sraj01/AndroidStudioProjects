@@ -47,6 +47,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/bottom_navigation"
                 app:labelVisibilityMode="labeled"
+                app:itemTextColor="@color/white"
+                app:itemIconTint="@color/lightBlue"
                 app:menu="@menu/bottom_menu"
                 android:background="@android:color/transparent" />
 
@@ -56,6 +58,8 @@
                 android:id="@+id/fab"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:contentDescription="@string/openadd_edit_task_screen"
+                android:tint="@color/white"
                 android:backgroundTint="@color/primaryColor"
                 android:src="@drawable/outline_add_2_24"
                 app:layout_anchor="@id/bottomAppBar"

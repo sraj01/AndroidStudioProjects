@@ -15,10 +15,12 @@
 
     <item android:id="@+id/button_reports"
     android:title="@string/report"
+
     android:icon="@drawable/baseline_reports"/>
 
     <item android:id="@+id/button_settings"
     android:title="@string/settings"
+        android:iconTint="@color/black"
     android:icon="@drawable/baseline_settings_24"/>
 
 

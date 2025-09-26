@@ -7,7 +7,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.tasklyy.AuthenticationScreens.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
@@ -26,7 +25,19 @@ class LoginViewModel @Inject constructor(
     val loginState: LiveData<Boolean> get() = _loginState
 
 
-    fun signInWithGoogle(
+    fun signUpWithGoogle(
+        context: Context,
+        launcher: ActivityResultLauncher<Intent>,
+        onLoginSuccess: () -> Unit
+    ) {
+        repository.signUpWithGoogle(
+            context = context,
+            scope = MainScope(),
+            launcher = launcher,
+            onLoginSuccess = onLoginSuccess
+        )
+    }
+    fun  signInWithGoogle(
         context: Context,
         launcher: ActivityResultLauncher<Intent>,
         onLoginSuccess: () -> Unit
@@ -37,8 +48,6 @@ class LoginViewModel @Inject constructor(
             launcher = launcher,
             onLoginSuccess = onLoginSuccess
         )
-
-
     }
 
     fun signUp(
@@ -48,13 +57,12 @@ class LoginViewModel @Inject constructor(
         onResult: (Boolean, String) -> Unit
     ) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.signUp(username, password, "") { success, message ->
+            repository.signUp(username, password,scope = viewModelScope, email = "") { success, message ->
                 _authState.postValue(success)
                 onResult(success, message)
             }
         }
     }
-
     fun login(
         username: String,
         password: String,
@@ -64,4 +72,5 @@ class LoginViewModel @Inject constructor(
             _loginState.postValue(success)
             onResult(success, message)
         }
-    }}
+    }
+}

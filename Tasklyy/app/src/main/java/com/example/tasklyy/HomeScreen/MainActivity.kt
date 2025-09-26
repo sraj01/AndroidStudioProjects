@@ -1,5 +1,6 @@
 package com.example.tasklyy.HomeScreen
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -10,17 +11,19 @@ import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.example.tasklyy.AddTaskScreen.AddTaskScreen
 import com.example.tasklyy.R
 import com.example.tasklyy.Utils.GoogleSignInUtils
 import com.example.tasklyy.databinding.ActivityMainBinding
+import com.example.tasklyy.databinding.AddTaskScreenBinding
 import com.google.android.material.navigation.NavigationView
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener{
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
 
-    private lateinit var fragmentManager : FragmentManager
+    private lateinit var fragmentManager: FragmentManager
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,32 +41,38 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         binding.drawerlayout.addDrawerListener(toggle)
         toggle.syncState()
 
-
         binding.navigationDrawer.setNavigationItemSelectedListener(this)
 
         binding.bottomNavigation.background = null
 
-        binding.bottomNavigation.setOnItemSelectedListener{item ->
-        when(item.itemId) {
-            R.id.fragment_board -> openFragment(BoardFragment())
+        binding.bottomNavigation.setOnItemSelectedListener { item ->
+            when (item.itemId) {
 
+                R.id.fragment_board -> openFragment(BoardFragment())
 
-        }
+            }
             true
         }
-
         fragmentManager = supportFragmentManager
         openFragment(BoardFragment())
 
+         binding.fab.setOnClickListener {
+             launchAddTaskActivity()
 
+         }
 
+    }
+
+    private fun launchAddTaskActivity() {
+        val intent = Intent(this, AddTaskScreen::class.java)
+        startActivity(intent)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-/*
-            R.id.user_signOut -> openFragment(FilterFragment())
-*/       R.id.user_signOut -> {
+            /*
+                        R.id.user_signOut -> openFragment(FilterFragment())
+            */       R.id.user_signOut -> {
             binding.drawerlayout.closeDrawer(GravityCompat.START)
             Handler(Looper.getMainLooper()).postDelayed({
                 GoogleSignInUtils.signOutUser(this)
@@ -77,21 +86,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
 
-
-        override fun onBackPressed() {
-            if (binding.drawerlayout.isDrawerOpen(GravityCompat.START)) {
-                binding.drawerlayout.closeDrawer(GravityCompat.START)
-            } else {
-                super.onBackPressedDispatcher.onBackPressed()
-
-            }
+    override fun onBackPressed() {
+        if (binding.drawerlayout.isDrawerOpen(GravityCompat.START)) {
+            binding.drawerlayout.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressedDispatcher.onBackPressed()
 
         }
 
-        fun openFragment(fragment: Fragment) {
-            val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-            fragmentTransaction.replace(R.id.fragment_container, fragment)
-            fragmentTransaction.commit()
-
-        }
     }
+
+    fun openFragment(fragment: Fragment) {
+        val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.fragment_container, fragment)
+        fragmentTransaction.commit()
+
+    }
+}

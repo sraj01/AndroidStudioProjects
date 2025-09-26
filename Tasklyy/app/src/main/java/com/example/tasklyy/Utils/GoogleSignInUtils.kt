@@ -15,8 +15,7 @@ import androidx.credentials.exceptions.GetCredentialException
 import androidx.credentials.exceptions.NoCredentialException
 import com.example.tasklyy.AuthenticationScreens.AuthRepository
 import com.example.tasklyy.AuthenticationScreens.LoginScreen.LoginActivity
-import com.example.tasklyy.Local.DB.UserDao
-import com.example.tasklyy.Local.DB.UserDatabase
+import com.example.tasklyy.Local.DB.AppDatabase
 import com.example.tasklyy.Local.DB.UserEntity
 import com.example.tasklyy.R
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
@@ -28,29 +27,25 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import kotlin.let
 
 class GoogleSignInUtils {
 
 
-
-
-
     companion object {
 
-        fun doGoogleSignIn(
+        fun doGoogleSignUP(
             context: Context,
             scope: CoroutineScope,
+            isLogin: Boolean,
             launcher: ActivityResultLauncher<Intent>,
             login: () -> Unit
         ) {
             val credentialManager = CredentialManager.Companion.create(context)
-           lateinit var repository: AuthRepository
+            lateinit var repository: AuthRepository
 
-        val db = UserDatabase.getInstance(context)
+            val db = AppDatabase.getInstance(context)
             val userDao = db.userDao
-
-
-
 
 
             val request = GetCredentialRequest.Builder()
@@ -62,7 +57,10 @@ class GoogleSignInUtils {
                     val result = credentialManager.getCredential(context, request)
                     when (result.credential) {
                         is CustomCredential -> {
-                            Log.d("GoogleSignInUtils", "doGoogleSignIn: get credential data: " +result.credential )
+                            Log.d(
+                                "GoogleSignInUtils",
+                                "doGoogleSignIn: get credential data: " + result.credential
+                            )
                             if (result.credential.type == GoogleIdTokenCredential.Companion.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
                                 val googleIdTokenCredential: GoogleIdTokenCredential =
                                     GoogleIdTokenCredential.Companion.createFrom(result.credential.data)
@@ -71,47 +69,48 @@ class GoogleSignInUtils {
                                 val googleTokenId = googleIdTokenCredential.idToken
                                 val authCredential =
                                     GoogleAuthProvider.getCredential(googleTokenId, null)
-                                Log.d("GoogleSignInUtils", "doGoogleSignIn: email: " +email)
+                                Log.d("GoogleSignInUtils", "doGoogleSignIn: email: $email")
 
                                 // TODO: validate for exixting emailid before  firebase login
-/*
-                                val existingMailUser = userDao.getUserfromEmail(email.toString()) != null
-*/
+
                                 val existingUser = userDao.getUserfromEmail(email ?: "")
 
-                                /*
-                                                                repository.signUp("", "", email.toString()) { success, message ->
+                                if (isLogin) {
+                                    if (existingUser != null) {
+                                        val user =
+                                            Firebase.auth.signInWithCredential(authCredential)
+                                                .await().user
+                                        user?.let {
+                                            if (!it.isAnonymous) {
+                                                login.invoke()
+                                            }
+                                        }
+                                    } else {
+                                        showToast(
+                                            context,
+                                            "No account found. Please sign up first."
+                                        )
+                                    }
 
-                                                                      if (existingMailUser!=null){
-
-                                                                      }
-                                                                  *//*  _authState.postValue(success)
-                                    onResult(success, message)*//*
-                                    Log.d("GoogleSignInUtils", "doGoogleSignIn: ")
-                                }*/
-                                if (existingUser != null ){
-                                    showToast(context,"Email id already exist")
-                                }
-                                else{
-                                    userDao.insertUser(UserEntity(emailId = email ?: ""))
-
-                                    val user =
-                                        Firebase.auth.signInWithCredential(authCredential).await().user
-
-                                    user?.let {
-                                        if (!it.isAnonymous) {
-                                            login.invoke()
+                                } else {
+                                    if (existingUser != null) {
+                                        showToast(context, "Email id already exist. Please login.")
+                                    } else {
+                                        userDao.insertUser(UserEntity(emailId = email ?: ""))
+                                        val user =
+                                            Firebase.auth.signInWithCredential(authCredential)
+                                                .await().user
+                                        user?.let {
+                                            if (!it.isAnonymous) {
+                                                login.invoke()
+                                            }
                                         }
                                     }
                                 }
-
-
                             }
                         }
 
-                        else -> {
-
-                        }
+                        else -> {}
                     }
                 } catch (e: NoCredentialException) {
                     launcher.launch(getIntent())
@@ -163,7 +162,8 @@ class GoogleSignInUtils {
                 .setServerClientId(context.getString(R.string.web_id))
                 .build()
         }
-        private fun showToast(context: Context,message: String) {
+
+        private fun showToast(context: Context, message: String) {
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
         }
 

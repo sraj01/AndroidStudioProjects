@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.tasklyy.HomeScreen.MainActivity
@@ -18,6 +20,11 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private val viewModel: LoginViewModel by viewModels()
+    private val launcher: ActivityResultLauncher<Intent> =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            Toast.makeText(this, "Google Sign-In Completed", Toast.LENGTH_SHORT).show()
+        }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,11 +62,20 @@ class LoginActivity : AppCompatActivity() {
                 binding.progressBar.visibility = View.GONE
                 showToast(message)
                 if (success) {
-                    saveUserSession(username) // ✅ store login session
+                    saveUserSession(username) // login session
                     navigateToMain()
                 }
             }
         }
+
+        binding.btnSignInWithGoogle.setOnClickListener {
+            viewModel.signInWithGoogle(context = this, launcher = launcher, onLoginSuccess = {
+                Toast.makeText(this, "Google Sign-In Successful", Toast.LENGTH_SHORT).show()
+                navigateToMain()
+            }
+            )
+        }
+
     }
 
     private fun validateLoginInputs(username: String, password: String): Boolean {
@@ -68,10 +84,12 @@ class LoginActivity : AppCompatActivity() {
                 showToast("Please enter username")
                 false
             }
+
             password.isEmpty() -> {
                 showToast("Please enter password")
                 false
             }
+
             else -> true
         }
     }

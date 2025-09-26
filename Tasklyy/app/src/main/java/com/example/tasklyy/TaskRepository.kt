@@ -1,7 +1,21 @@
 package com.example.tasklyy
 
+import androidx.lifecycle.LiveData
+import com.example.tasklyy.Local.DB.taskData.Task
+import com.example.tasklyy.Local.DB.taskData.TaskDao
 import javax.inject.Inject
 
+
+class TaskRepository @Inject constructor(private val taskDao: TaskDao) {
+    suspend fun insertTask(task: Task) = taskDao.insertTask(task)
+
+
+    fun getTasks(): LiveData<List<Task>> = taskDao.getAllTasks()
+
+}
+
+
+/*
 class TaskRepository @Inject constructor() {
     fun getTasks(): ArrayList<Task> {
         return arrayListOf(
@@ -13,4 +27,4 @@ class TaskRepository @Inject constructor() {
         )
 
     }
-}
+}*/

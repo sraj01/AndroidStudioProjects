@@ -14,6 +14,7 @@ import com.example.tasklyy.HomeScreen.MainActivity
 import com.example.tasklyy.databinding.ActivitySignupBinding
 import dagger.hilt.android.AndroidEntryPoint
 
+
 @AndroidEntryPoint
 class SignUpActivity : AppCompatActivity() {
 
@@ -62,13 +63,12 @@ class SignUpActivity : AppCompatActivity() {
             val password = binding.et2Password.text.toString().trim()
             val confirmPassword = binding.et3Password.text.toString().trim()
 
-            if (!validateSignUpInputs(username, password,confirmPassword)) return@setOnClickListener
-
-
-            /*if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-                showToast("All fields are required")
-                return@setOnClickListener
-            }*/
+            if (!validateSignUpInputs(
+                    username,
+                    password,
+                    confirmPassword
+                )
+            ) return@setOnClickListener
             // TODO: validations of signup fields create and  specific method for validations
 
             binding.progressBar.visibility = View.VISIBLE
@@ -76,15 +76,12 @@ class SignUpActivity : AppCompatActivity() {
             viewModel.signUp(username, password, confirmPassword) { success, message ->
                 binding.progressBar.visibility = View.GONE
                 showToast(message)
-                if (success) {
-                    startActivity(Intent(this, LoginActivity::class.java))
-                    finish()
-                }
+
             }
         }
 
         binding.btnGoogle.setOnClickListener {
-            viewModel.signInWithGoogle(
+            viewModel.signUpWithGoogle(
                 context = this,
                 launcher = launcher,
                 onLoginSuccess = {
@@ -93,14 +90,25 @@ class SignUpActivity : AppCompatActivity() {
                 }
             )
         }
+        binding.btnBackToLogin.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+
+        }
     }
 
-    private fun validateSignUpInputs(username: String, password: String,confirmPassword: String): Boolean {
+    private fun validateSignUpInputs(
+        username: String,
+        password: String,
+        confirmPassword: String
+    ): Boolean {
         return when {
             username.isEmpty() -> {
                 showToast("Please enter username")
                 false
             }
+
             password.isEmpty() -> {
                 showToast("Please enter password")
                 false
@@ -110,14 +118,18 @@ class SignUpActivity : AppCompatActivity() {
                 showToast("Please enter password")
                 false
             }
-            password.equals(confirmPassword) -> {
-                showToast("P")
+
+            password != confirmPassword -> {
+
+                showToast("Password should match Confirm Password")
                 false
             }
-            
-            else -> true
+
+            else -> {
+                true
+            }
         }
-        
+
     }
 
     private fun navigateToMain() {

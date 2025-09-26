@@ -56,6 +56,7 @@ dependencies {
         implementation("com.google.firebase:firebase-auth-ktx")
         implementation("com.google.firebase:firebase-firestore-ktx")
         implementation("com.google.firebase:firebase-analytics-ktx")
+        implementation("androidx.fragment:fragment-ktx:1.8.2") // Or the latest version
 
         implementation(libs.androidx.core.ktx)
         implementation(libs.androidx.appcompat)

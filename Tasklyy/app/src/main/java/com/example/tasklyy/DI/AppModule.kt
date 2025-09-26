@@ -4,7 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import com.example.tasklyy.Local.Preference.SharedPrefsHelper
 import com.example.tasklyy.Local.DB.UserDao
-import com.example.tasklyy.Local.DB.UserDatabase
+import com.example.tasklyy.Local.DB.AppDatabase
+import com.example.tasklyy.Local.DB.taskData.TaskDao
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
@@ -23,16 +24,16 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideDatabase(@ApplicationContext appContext: Context): UserDatabase {
+    fun provideDatabase(@ApplicationContext appContext: Context): AppDatabase {
         return Room.databaseBuilder(
             appContext,
-            UserDatabase::class.java,
+            AppDatabase::class.java,
             "tasklyy_db"
         ).build()
     }
 
     @Provides
-    fun provideUserDao(database: UserDatabase): UserDao {
+    fun provideUserDao(database: AppDatabase): UserDao {
         return database.userDao
     }
 
@@ -41,4 +42,8 @@ object AppModule {
     fun provideSharedPrefsHelper(@ApplicationContext appContext: Context): SharedPrefsHelper {
         return SharedPrefsHelper(appContext)
     }
+    @Provides fun provideTaskDao(database: AppDatabase): TaskDao{
+        return database.taskDao
+    }
+
 }

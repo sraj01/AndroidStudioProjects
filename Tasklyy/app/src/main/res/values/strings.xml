@@ -25,4 +25,32 @@
     <string name="todo">Todo</string>
     <string name="high">High</string>
     <string name="task_title">Task title</string>
+    <string name="already_have_an_account_sign_in">Already have an account? Sign In</string>
+    <string name="signin_with_google">SignIn With Google</string>
+    <string name="title_task">Title</string>
+    <string name="enter_task_title">Enter title</string>
+    <string name="task_description">Description</string>
+    <string name="et_task_description">Enter description</string>
+    <string name="task_priority">Priority</string>
+    <string name="task_priority_high">High</string>
+    <string name="task_priority_medium">Medium</string>
+    <string name="task_priority_low">Low</string>
+    <string name="task_assignee">Assignee</string>
+    <string name="task_due_date">Due Date</string>
+    <string name="select_due_date">Select due date</string>
+    <string name="task_status">Status</string>
+    <string name="task_add">Save Task</string>
+    <string name="select_date">Select Date</string>
+    <string name="no_date_selected">No date selected</string>
+    <string name="select_date_task">Select Date</string>
+    <string name="dd_mm_yyyy">DD/MM/YYYY</string>
+    <string name="openadd_edit_task_screen">openADD_EDIT_TASK_SCREEN</string>
+
+    <string-array name="status_array">
+    <item>Todo</item>
+    <item>In Progress</item>
+    <item>Done</item>
+    </string-array>
+
+
 </resources>

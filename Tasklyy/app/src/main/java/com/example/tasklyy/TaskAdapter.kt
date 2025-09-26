@@ -1,24 +1,24 @@
 package com.example.tasklyy
 
-import android.graphics.pdf.models.ListItem
-import android.view.MenuItem
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
+import com.example.tasklyy.Local.DB.taskData.Task
 import com.example.tasklyy.databinding.ListItemBinding
-import java.util.ArrayList
+import java.util.Locale
 
-/*class TaskAdapter(
-    private val tasks: List<Task>
-) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
+class TaskAdapter(private var originalList: List<Task>) :
+    RecyclerView.Adapter<TaskAdapter.TaskViewHolder>(), Filterable {
 
-    inner class TaskViewHolder(val binding: ItemTaskBinding) :
+    private var filteredList: MutableList<Task> = originalList.toMutableList()
+
+    inner class TaskViewHolder(val binding: ListItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
-        val binding = ItemTaskBinding.inflate(
+        val binding = ListItemBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
@@ -27,43 +27,45 @@ import java.util.ArrayList
     }
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
-        val task = tasks[position]
+        val currentTask = filteredList[position]
         holder.binding.apply {
-            tvTaskTitle.text = task.taskTitle
-            tvTaskStatus.text = task.taskStatus
-            tvTaskPriority.text = task.taskPriority
+            taskTitle.text = currentTask.title
+            taskPriority.text = when (currentTask.taskPriority) {
+                0 -> "High"
+                1 -> "Medium"
+                2 -> "Low"
+                else -> "Unknown"
+            }
         }
     }
 
-    override fun getItemCount() = tasks.size
-}
-*/
+    override fun getItemCount(): Int = filteredList.size
 
-class TaskAdapter(  private val taskList: ArrayList<Task>) :
-    RecyclerView.Adapter<TaskAdapter.TaskViewHolder> (){
-
-        override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): TaskViewHolder {
-        return TaskViewHolder(ListItemBinding.inflate(LayoutInflater.from(parent.context),parent,false))
+    fun updateList(newList: List<Task>) {
+        originalList = newList
+        filteredList = newList.toMutableList() // reset filtered list
+        notifyDataSetChanged()
     }
 
-    class TaskViewHolder(val binding: ListItemBinding): RecyclerView.ViewHolder(binding.root) {}
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val query = constraint?.toString()?.lowercase(Locale.ROOT)?.trim() ?: ""
+                val resultList = if (query.isEmpty()) {
+                    originalList
+                } else {
+                    originalList.filter { it.title.lowercase(Locale.ROOT).contains(query) }
+                }
+                val filterResults = FilterResults()
+                filterResults.values = resultList
+                return filterResults
+            }
 
-        override fun onBindViewHolder(
-        holder: TaskViewHolder,
-        position: Int
-    ) {
-        val currentItem = taskList[position]
-        holder.binding.apply {
-          taskTitle.text =currentItem.title
-          taskStatus.text =currentItem.status
-          taskPriority.text =currentItem.priority
+            @Suppress("UNCHECKED_CAST")
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                filteredList = (results?.values as? List<Task>)?.toMutableList() ?: mutableListOf()
+                notifyDataSetChanged()
+            }
         }
     }
-    override fun getItemCount(): Int {
-        return taskList.size
-    }
-
 }

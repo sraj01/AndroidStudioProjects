@@ -24,7 +24,7 @@
             android:layout_marginTop="48dp"
             android:layout_marginBottom="32dp" />
 
-        <!-- Email Field -->
+        <!-- username -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -94,7 +94,18 @@
             android:indeterminate="true"
             android:layout_gravity="center_horizontal"/>
 
-
+        <Button
+            android:id="@+id/btnSignInWithGoogle"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/signin_with_google"
+            android:textStyle="bold"
+            android:textColor="@color/backgroundColor"
+            android:background="@drawable/rounded_button"
+            app:backgroundTint="@null"
+            app:iconTint="@color/white"
+            app:cornerRadius="0dp" />
 
         <TextView
             android:id="@+id/tvCreateAccount"
