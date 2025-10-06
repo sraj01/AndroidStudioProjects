@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+     >
+
+    <group>
+
+
+
+<item
+    android:id="@+id/nav_projects"
+    android:title="@string/project_nav"
+    android:icon="@drawable/project_1666597"/>
+<item
+    android:id="@+id/user_signOut"
+    android:title="@string/signout"
+    android:icon="@drawable/bwink_bld_03_single_03"/>
+<item
+    android:id="@+id/nav_dashboard"
+    android:title="@string/dashboard_nav"
+    android:icon="@drawable/baseline_dashboard_24"/>
+
+
+    </group>
+
+
+
+</menu>

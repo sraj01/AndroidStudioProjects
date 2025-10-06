@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- First Item (Left) -->
+    <item
+        android:id="@+id/nav_dashboard"
+        android:icon="@drawable/nav_board_icon_selector"
+        android:title="@string/board" />
+
+    <!-- This is the crucial empty space for the FAB cradle -->
+    <item
+        android:id="@+id/nav_placeholder"
+        android:title=""
+        android:enabled="false" />
+
+    <!-- Second Item (will be to the right of the FAB) -->
+    <item
+        android:id="@+id/nav_calendar"
+        android:icon="@drawable/nav_calendar_icon_selector"
+        android:title="@string/calendar" />
+
+    <!-- Third Item (Far Right) -->
+    <item
+        android:id="@+id/nav_report"
+        android:icon="@drawable/nav_report_icon_selector"
+        android:title="@string/report" />
+
+</menu>

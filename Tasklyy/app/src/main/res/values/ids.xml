@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="status_todo" />
+    <item type="id" name="status_inprogress" />
+    <item type="id" name="status_done" />
+</resources>
